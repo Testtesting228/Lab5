@@ -1,0 +1,43 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Завантаження файлів";
+}
+
+<div class="container mt-4">
+    <h2>Завантаження файлів на сервер у папку «wwwroot/Files»</h2>
+    <hr />
+
+    <form method="post" enctype="multipart/form-data" class="mb-4 p-3 border rounded bg-light">
+        <div class="mb-3">
+            <label for="fileInput" class="form-label fw-bold">Оберіть файл на комп'ютері:</label>
+            <input type="file" asp-for="UploadedFile" class="form-control" id="fileInput" />
+        </div>
+        <button type="submit" class="btn btn-primary">Завантажити на сервер</button>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert alert-info">
+            @Model.Message
+        </div>
+    }
+
+    <h4>Файли в директорії wwwroot/Files:</h4>
+    @if (Model.FileNames.Count > 0)
+    {
+        <ul class="list-group">
+            @foreach (var name in Model.FileNames)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>@name</span>
+                    <a href="~/Files/@name" target="_blank" class="btn btn-sm btn-outline-secondary">Відкрити / Завантажити</a>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="text-muted">Папка поки що порожня.</p>
+    }
+</div>
